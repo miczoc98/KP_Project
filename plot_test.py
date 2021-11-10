@@ -1,3 +1,4 @@
+# noinspection PyInterpreter
 import tkinter
 
 from matplotlib.backends.backend_tkagg import (
