@@ -8,6 +8,7 @@ from PageTwo import PageTwo
 
 
 class PlotPage(tk.Frame):
+    name = "Plot"
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.contoller = controller
@@ -21,7 +22,7 @@ class PlotPage(tk.Frame):
         label = ttk.Label(self, text="GraphPage", font=18)
         label.grid(row=0, column=0, columnspan=self.width)
 
-        buttonMenu = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame(PageTwo))
+        buttonMenu = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame("SecondPage"))
         buttonMenu.grid(row=self.height + 2, column=self.width - 2, sticky="nswe")
 
         buttonDelete = ttk.Button(self, text="Delete curve", command=lambda: self.delete())

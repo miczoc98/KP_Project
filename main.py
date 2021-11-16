@@ -5,9 +5,11 @@ from tkinter import font as tkfont
 from PlotPage import PlotPage
 
 import matplotlib
+
 matplotlib.use("TkAgg")
 
 LARGE_FONT = 18
+
 
 class App(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -15,7 +17,7 @@ class App(tk.Tk):
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
 
         tk.Tk.wm_title(self, "Fast and Simple Fitting Tool")
-        self.geometry("1400x1000")
+        self.geometry("800x600")
 
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
@@ -26,9 +28,9 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (PageGetData, PageTwo, PlotPage):
+        for F in (PageGetData, SecondPage, PlotPage):
             frame = F(container, self)
-            self.frames[F] = frame
+            self.frames[F.name] = frame
             # put all of the pages in the same location;
             # the one on the top of the stacking order
             # will be the one that is visible.
@@ -46,38 +48,37 @@ class App(tk.Tk):
 
 
 class PageGetData(tk.Frame):
+    name = "GetData"
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.contoller = controller
+
+        label = ttk.Label(self, text="GetData", font=LARGE_FONT)
+        label.pack(side="top", pady=10, padx=10)
+
+        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame("GetData"))
+        button1.pack()
+
+        button2 = ttk.Button(self, text="Show Plot", command=lambda: controller.show_frame("Plot"))
+        button2.pack()
+
+
+class SecondPage(tk.Frame):
+    name = "Second"
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.contoller = controller
         label = ttk.Label(self, text="GetData", font=LARGE_FONT)
         label.pack(side="top", pady=10, padx=10)
 
-        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame(PageGetData))
+        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame("GetData"))
         button1.pack()
 
-
-        button2 = ttk.Button(self, text="Wykres " + "''", command=lambda: controller.show_frame(PlotPage))
+        button2 = ttk.Button(self, text="See Plot", command=lambda: controller.show_frame("Plot"))
         button2.pack()
 
-        button3 = ttk.Button(self, text="SavedCurves", command=lambda: controller.show_frame(PageTwo))
-        button3.pack()
-
-
-class PageTwo(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.contoller = controller
-        label = ttk.Label(self, text="GetData", font=LARGE_FONT)
-        label.pack(side="top", pady=10, padx=10)
-
-        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame(PageGetData))
-        button1.pack()
-
-        button2 = ttk.Button(self, text="PageTwo "  + "''", command=lambda: controller.show_frame(PageGetData))
-        button2.pack()
-
-        button3 = ttk.Button(self, text="SavedCurves", command=lambda: controller.show_frame(PageGetData))
-        button3.pack()
 
 app = App()
 app.mainloop()
