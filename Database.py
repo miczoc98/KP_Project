@@ -1,8 +1,8 @@
 import sqlite3
-import time
 
 db = "db.db"
 table = "measurements"
+
 
 def create_db():
     con = sqlite3.connect(db)
@@ -11,6 +11,7 @@ def create_db():
                    (timestamp real, PM2_5 real, PM10 real, pressure real, temperature real)'''.format(table))
     con.commit()
     con.close()
+
 
 def save_measurement(measurement: dict) -> None:
     con = sqlite3.connect(db)
@@ -25,4 +26,6 @@ def save_measurement(measurement: dict) -> None:
         measurement["temperature"]
     )
 
-    cur.execute()
+    cur.execute(statement)
+    con.commit()
+    con.close()
