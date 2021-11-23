@@ -3,6 +3,8 @@ from tkinter import ttk
 
 from tkinter import font as tkfont
 from PlotPage import PlotPage
+from MainPage import MainPage
+from SecondPage import SecondPage
 
 import matplotlib
 
@@ -16,7 +18,7 @@ class App(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
 
-        tk.Tk.wm_title(self, "Fast and Simple Fitting Tool")
+        tk.Tk.wm_title(self, "Weather station")
         self.geometry("800x600")
 
         # the container is where we'll stack a bunch of frames
@@ -28,7 +30,7 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (PageGetData, SecondPage, PlotPage):
+        for F in (MainPage, SecondPage, PlotPage):
             frame = F(container, self)
             self.frames[F.name] = frame
             # put all of the pages in the same location;
@@ -36,48 +38,12 @@ class App(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(PageGetData)
+        self.show_frame("Main")
 
     def show_frame(self, page):
         '''Show a frame for the given page name'''
         frame = self.frames[page]
         frame.tkraise()
-
-    def show_main_frame(self):
-        pass
-
-
-class PageGetData(tk.Frame):
-    name = "GetData"
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.contoller = controller
-
-        label = ttk.Label(self, text="GetData", font=LARGE_FONT)
-        label.pack(side="top", pady=10, padx=10)
-
-        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame("GetDataoooiiiiiiiiiiiiiiiiiiiiiiiiiiiii"))
-        button1.pack()
-
-        button2 = ttk.Button(self, text="Show Plot", command=lambda: controller.show_frame("Plot"))
-        button2.pack()
-
-
-class SecondPage(tk.Frame):
-    name = "Second"
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.contoller = controller
-        label = ttk.Label(self, text="GetData", font=LARGE_FONT)
-        label.pack(side="top", pady=10, padx=10)
-
-        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame("GetData"))
-        button1.pack()
-
-        button2 = ttk.Button(self, text="See Plot", command=lambda: controller.show_frame("Plot"))
-        button2.pack()
 
 
 app = App()
