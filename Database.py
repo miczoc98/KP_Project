@@ -4,7 +4,7 @@ db = "db.db"
 table = "measurements"
 
 
-def create_db():
+def create_db() -> None:
     con = sqlite3.connect(db)
     cur = con.cursor()
     cur.execute(f'''CREATE TABLE IF NOT EXISTS {table}
@@ -20,10 +20,7 @@ def save_measurement(measurement: dict) -> None:
     statement = f'''insert into {table} (timestamp, PM2_5, PM10, pressure, temperature)
         values ({measurement["timestamp"]}, {measurement["PM2_5"]}, {measurement["PM10"]}, {measurement["pressure"]}, {measurement["temperature"]})'''
 
-    print(statement)
-
     cur.execute(statement)
-    print(cur.lastrowid)
     con.commit()
     con.close()
 
@@ -43,7 +40,8 @@ def read_measurements(from_: int , to: int) -> list:
 
     return measurements
 
-def convert_to_dict(keys, values):
+
+def convert_to_dict(keys: list, values: list) -> dict:
     dict = {}
     for i in range(len(keys)):
         dict[keys[i]] = values[i]
