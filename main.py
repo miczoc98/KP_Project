@@ -57,7 +57,7 @@ class PageGetData(tk.Frame):
         label = ttk.Label(self, text="GetData", font=LARGE_FONT)
         label.pack(side="top", pady=10, padx=10)
 
-        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame("GetData"))
+        button1 = ttk.Button(self, text="Back to Menu", command=lambda: controller.show_frame("GetDataoooiiiiiiiiiiiiiiiiiiiiiiiiiiiii"))
         button1.pack()
 
         button2 = ttk.Button(self, text="Show Plot", command=lambda: controller.show_frame("Plot"))
