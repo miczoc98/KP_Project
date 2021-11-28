@@ -1,14 +1,16 @@
 import sqlite3
 
-db = "db.db"
+db = "/home/pi/Desktop/zoczek_zychowicz/db.db"
 table = "measurements"
 
 
 def create_db() -> None:
     con = sqlite3.connect(db)
     cur = con.cursor()
-    cur.execute(f'''CREATE TABLE IF NOT EXISTS {table}
-                   (timestamp real, PM2_5 real, PM10 real, pressure real, temperature real)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS {}
+                   (timestamp real, PM2_5 real, PM10 real, pressure real, temperature real)'''.format(
+        table
+    ))
     con.commit()
     con.close()
 
@@ -17,8 +19,15 @@ def save_measurement(measurement: dict) -> None:
     con = sqlite3.connect(db)
     cur = con.cursor()
 
-    statement = f'''insert into {table} (timestamp, PM2_5, PM10, pressure, temperature)
-        values ({measurement["timestamp"]}, {measurement["PM2_5"]}, {measurement["PM10"]}, {measurement["pressure"]}, {measurement["temperature"]})'''
+    statement = '''insert into {} (timestamp, PM2_5, PM10, pressure, temperature)
+        values ({}, {}, {}, {}, {})'''.format(
+        table,
+        measurement["timestamp"],
+        measurement["PM2_5"],
+        measurement["PM10"],
+        measurement["pressure"],
+        measurement["temperature"]
+    )
 
     cur.execute(statement)
     con.commit()
@@ -31,7 +40,11 @@ def read_measurements(from_: int , to: int) -> list:
 
     con = sqlite3.connect(db)
     cur = con.cursor()
-    statement = f'''SELECT * FROM {table} WHERE timestamp >= {from_} AND timestamp  <= {to}'''
+    statement = f='''SELECT * FROM {} WHERE timestamp >= {} AND timestamp  <= {}'''.format(
+        table,
+        from_,
+        to
+    )
     records = cur.execute(statement)
     for record in records:
         measurements.append(convert_to_dict(keys, record))

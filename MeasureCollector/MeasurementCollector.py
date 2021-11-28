@@ -1,6 +1,6 @@
 import time
 
-from MeasurementCollecting import ConnectorsMock as Connectors
+import Connectors
 import Database
 
 time_between_queries_in_s = 1
@@ -17,6 +17,7 @@ if __name__ == '__main__':
 
         values = Connectors.get_values()
         Database.save_measurement(values)
+        print(values)
 
         current_wait_time = 0
         wait_start_time = time.time()

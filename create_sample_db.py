@@ -1,7 +1,6 @@
 import time
 
-from MeasurementCollecting import ConnectorsMock
-import Database
+from MeasureCollector import ConnectorsMock, Database
 
 number_of_records = 1000
 interval_in_seconds = 60
